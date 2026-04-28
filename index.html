@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encryption Oracle – Forensic Cipher, Hash & Encoding Detector</title>
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --surface: #141b27;
+    --border: #29303b;
+    --text: #d1d5db;
+    --accent: #3b82f6;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --code-bg: #0e131f;
+    --radius: 14px;
+    --shadow: 0 12px 28px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  .app {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  header h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p {
+    color: #94a3b8;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+  }
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    background: rgba(255,255,255,0.03);
+    padding: 1rem 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .card-body {
+    padding: 1.4rem;
+  }
+  textarea, .output {
+    width: 100%;
+    background: var(--code-bg);
+    color: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(59,130,246,0.3); }
+  .btn-secondary { background: #334155; }
+  .btn-secondary:hover { background: #475569; }
+  .tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .tab {
+    padding: 8px 16px;
+    background: #1e293b;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: 0.2s;
+  }
+  .tab.active {
+    background: var(--accent);
+    color: white;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  .high-conf { background: #16a34a33; color: #4ade80; }
+  .med-conf  { background: #f59e0b33; color: #fbbf24; }
+  .low-conf  { background: #ef444433; color: #f87171; }
+  .copy-icon {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+  }
+  .copy-icon:hover { opacity: 1; }
+  .drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    color: #94a3b8;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+  .drop-zone.dragover {
+    border-color: var(--accent);
+    background: rgba(59,130,246,0.05);
+  }
+  .entropy-bar {
+    height: 10px;
+    background: #1e293b;
+    border-radius: 10px;
+    margin: 8px 0;
+    overflow: hidden;
+  }
+  .entropy-fill {
+    height: 100%;
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+  .verdict-box {
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>🛡️ Encryption Oracle</h1>
+    <p>Identify hashes, ciphertext, encodings & encrypted file signatures. Forensic‑grade entropy classification. Drag‑drop files or paste data.</p>
+  </header>
+
+  <div class="card">
+    <div class="card-header">📥 Input Panel</div>
+    <div class="card-body">
+      <textarea id="inputData" rows="6" placeholder="Paste any text, hex, base64, or encrypted payload...&#10;Examples:&#10;U2FsdGVkX1+8ns... (OpenSSL)&#10;-----BEGIN PGP MESSAGE-----&#10;5d41402abc4b2a76b9719d911017c592&#10;827ccb0eea8a706c4c34a16891f84e7b..."></textarea>
+      <div style="margin-top: 1rem; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn" id="analyzeBtn">🔍 Deep Analyze</button>
+        <button class="btn btn-secondary" id="resetBtn">🗑️ Clear</button>
+      </div>
+      <div class="drop-zone" id="dropZone">
+        📁 Drop a file here to read its magic bytes (encrypted archives, documents, containers)
+      </div>
+      <div id="fileInfo" style="margin-top:0.5rem; font-size:0.8rem; color:#94a3b8;"></div>
+    </div>
+  </div>
+
+  <!-- Tabs for results -->
+  <div class="tabs">
+    <div class="tab active" data-tab="summary">📊 Summary Verdict</div>
+    <div class="tab" data-tab="hashes">🔐 Hash Types (90+)</div>
+    <div class="tab" data-tab="cipher">🧪 Ciphertext & Containers</div>
+    <div class="tab" data-tab="encoding">🔣 Encoding Chains</div>
+    <div class="tab" data-tab="manual">⚙️ Manual Decoding</div>
+  </div>
+
+  <!-- Result panels -->
+  <div id="summaryPanel" class="card" style="display:block;">
+    <div class="card-header">🧠 Entropy & Classification</div>
+    <div class="card-body" id="entropyContent">Run analysis to see results.</div>
+  </div>
+  <div id="hashesPanel" class="card" style="display:none;">
+    <div class="card-header">🔐 Hash Identification</div>
+    <div class="card-body" id="hashesContent"></div>
+  </div>
+  <div id="cipherPanel" class="card" style="display:none;">
+    <div class="card-header">🧪 Ciphertext / Encrypted Container Signatures</div>
+    <div class="card-body" id="cipherContent"></div>
+  </div>
+  <div id="encodingPanel" class="card" style="display:none;">
+    <div class="card-header">🔣 Recursive Encoding Chain Decoder</div>
+    <div class="card-body" id="encodingContent"></div>
+  </div>
+  <div id="manualPanel" class="card" style="display:none;">
+    <div class="card-header">⚙️ Manual Decoding Workbench</div>
+    <div class="card-body">
+      <select id="encodingSelect" style="background:#0e131f; color:white; padding:8px; border-radius:8px; border:1px solid #334155;">
+        <option value="base64">Base64</option>
+        <option value="base32">Base32</option>
+        <option value="base58">Base58 (Bitcoin)</option>
+        <option value="base85">Ascii85/Base85</option>
+        <option value="hex">Hexadecimal</option>
+        <option value="url">URL decode</option>
+        <option value="html">HTML entities</option>
+        <option value="rot13">ROT13</option>
+        <option value="punycode">Punycode (IDN)</option>
+        <option value="qp">Quoted-Printable</option>
+        <option value="jwt">JWT (decode header/payload)</option>
+        <option value="xor">XOR with key (enter key)</option>
+      </select>
+      <input type="text" id="xorKey" placeholder="XOR key (string)" style="background:#0e131f; color:white; padding:8px; border-radius:8px; border:1px solid #334155; margin-left:8px; width:180px;" />
+      <button class="btn" id="manualDecodeBtn" style="margin-left:8px;">Decode Now</button>
+      <div id="manualResult" style="margin-top:1rem; white-space:pre-wrap; font-family:monospace;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== CORE UTILITIES ==========
+function shannonEntropy(str) {
+  const freq = {};
+  for (const ch of str) freq[ch] = (freq[ch] || 0) + 1;
+  let ent = 0;
+  const len = str.length;
+  for (const k in freq) {
+    const p = freq[k] / len;
+    ent -= p * Math.log2(p);
+  }
+  return ent;
+}
+
+function chiSquared(str) {
+  if (str.length < 2) return 0;
+  const freq = new Array(256).fill(0);
+  for (let i = 0; i < str.length; i++) freq[str.charCodeAt(i)]++;
+  const expected = str.length / 256;
+  let chi = 0;
+  for (let i = 0; i < 256; i++) chi += ((freq[i] - expected) ** 2) / expected;
+  return chi;
+}
+
+function monteCarloPiEstimate(str) {
+  let inside = 0, total = 0;
+  const bytes = new Uint8Array(Math.min(str.length, 8000));
+  for (let i = 0; i < bytes.length; i++) bytes[i] = str.charCodeAt(i) & 0xFF;
+  for (let i = 0; i < bytes.length - 1; i += 2) {
+    const x = (bytes[i] / 255) * 2 - 1;
+    const y = (bytes[i+1] / 255) * 2 - 1;
+    if (x*x + y*y <= 1) inside++;
+    total++;
+  }
+  if (total === 0) return 0;
+  return (4 * inside) / total;
+}
+
+function classifyEntropy(shannon, chi, piEst) {
+  if (shannon > 7.8 && piEst > 3.1 && piEst < 3.2) return { verdict: "🔐 Strongly Encrypted / Random", confidence: "high" };
+  if (shannon > 7.0 && chi > 200 && piEst > 3.05) return { verdict: "🔑 High‑entropy (likely encrypted)", confidence: "medium" };
+  if (shannon > 6.5 && chi > 150) return { verdict: "📦 Compressed or encrypted (high chaos)", confidence: "medium" };
+  if (shannon > 5.0 && shannon < 6.5) return { verdict: "🧩 Possibly encoded or compressed data", confidence: "low" };
+  if (shannon < 3.0) return { verdict: "📄 Likely plaintext / low‑entropy", confidence: "high" };
+  return { verdict: "🔍 Undetermined – needs deeper inspection", confidence: "low" };
+}
+
+// ---------- HASH SIGNATURES ----------
+const HASH_DB = [
+  { name: "MD5", re: /^[a-fA-F0-9]{32}$/, len: 32 },
+  { name: "MD4", re: /^[a-fA-F0-9]{32}$/, len: 32 },
+  { name: "SHA‑1", re: /^[a-fA-F0-9]{40}$/, len: 40 },
+  { name: "SHA‑224", re: /^[a-fA-F0-9]{56}$/, len: 56 },
+  { name: "SHA‑256", re: /^[a-fA-F0-9]{64}$/, len: 64 },
+  { name: "SHA‑384", re: /^[a-fA-F0-9]{96}$/, len: 96 },
+  { name: "SHA‑512", re: /^[a-fA-F0-9]{128}$/, len: 128 },
+  { name: "SHA3‑256", re: /^[a-fA-F0-9]{64}$/, len: 64 },
+  { name: "SHA3‑384", re: /^[a-fA-F0-9]{96}$/, len: 96 },
+  { name: "SHA3‑512", re: /^[a-fA-F0-9]{128}$/, len: 128 },
+  { name: "BLAKE2b", re: /^[a-fA-F0-9]{128}$/, len: 128 },
+  { name: "BLAKE2s", re: /^[a-fA-F0-9]{64}$/, len: 64 },
+  { name: "RIPEMD‑160", re: /^[a-fA-F0-9]{40}$/, len: 40 },
+  { name: "Whirlpool", re: /^[a-fA-F0-9]{128}$/, len: 128 },
+  { name: "CRC32", re: /^[a-fA-F0-9]{8}$/, len: 8 },
+  { name: "Adler32", re: /^[a-fA-F0-9]{8}$/, len: 8 },
+  { name: "NTLM", re: /^[a-fA-F0-9]{32}$/, len: 32 },
+  { name: "LM", re: /^[a-fA-F0-9]{32}$/, len: 32, note: "often uppercase" },
+  { name: "MySQL3", re: /^[a-fA-F0-9]{16}$/, len: 16 },
+  { name: "MySQL4", re: /^[a-fA-F0-9]{40}$/, len: 40 },
+  { name: "bcrypt", re: /^\$2[aby]\$\d+\$[./A-Za-z0-9]{53}$/, len: null },
+  { name: "MD5‑crypt (Unix)", re: /^\$1\$[./A-Za-z0-9]{8}\$[./A-Za-z0-9]{22}$/, len: null },
+  { name: "SHA256‑crypt (Unix)", re: /^\$5\$[./A-Za-z0-9]{16}\$[./A-Za-z0-9]{43}$/, len: null },
+  { name: "SHA512‑crypt (Unix)", re: /^\$6\$[./A-Za-z0-9]{16}\$[./A-Za-z0-9]{86}$/, len: null },
+  { name: "Keccak‑256", re: /^[a-fA-F0-9]{64}$/, len: 64 },
+  { name: "Keccak‑512", re: /^[a-fA-F0-9]{128}$/, len: 128 },
+  { name: "SipHash", re: /^[a-fA-F0-9]{16}$/, len: 16 },
+  { name: "Tiger‑192", re: /^[a-fA-F0-9]{48}$/, len: 48 },
+  { name: "GOST", re: /^[a-fA-F0-9]{64}$/, len: 64 },
+];
+function identifyHashes(input) {
+  const trimmed = input.trim();
+  const matches = [];
+  for (const h of HASH_DB) {
+    if (h.re.test(trimmed)) {
+      if (h.len && trimmed.length !== h.len) continue;
+      if (h.name.includes('bcrypt') || h.name.includes('crypt')) {
+        matches.push({ hash: h.name, confidence: "high" });
+      } else {
+        let ent = shannonEntropy(trimmed);
+        if (ent > 2.8) matches.push({ hash: h.name, confidence: ent>4?"high":"medium" });
+      }
+    }
+  }
+  // deduplicate exact same names
+  return [...new Map(matches.map(m=>[m.hash, m])).values()];
+}
+
+// ---------- CIPHERTEXT & CONTAINER SIGNATURES ----------
+const CIPHER_SIGS = [
+  { name: "OpenSSL salted format (Salted__)", re: /^Salted__.{8}/s, detail: "OpenSSL enc - typically AES-256-CBC with salt" },
+  { name: "PGP Message", re: /^-----BEGIN PGP MESSAGE-----/, detail: "ASCII-armored PGP symmetric or public key encrypted" },
+  { name: "GPG Private Key (encrypted)", re: /^-----BEGIN PGP PRIVATE KEY BLOCK-----/, detail: "Encrypted GPG private key" },
+  { name: "OpenSSH Private Key (encrypted)", re: /^-----BEGIN OPENSSH PRIVATE KEY-----/, detail: "Modern OpenSSH key, possibly encrypted" },
+  { name: "RSA Private Key (PKCS#1, encrypted)", re: /^-----BEGIN RSA PRIVATE KEY-----/, detail: "PEM encrypted RSA key" },
+  { name: "PKCS#8 Encrypted Private Key", re: /^-----BEGIN ENCRYPTED PRIVATE KEY-----/, detail: "PKCS#8 encrypted container" },
+  { name: "BitLocker recovery key", re: /^[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}$/, detail: "48-digit BitLocker recovery key" },
+  { name: "VeraCrypt/TrueCrypt header signature", re: /^(VERA|TRUE)/, detail: "First bytes of VeraCrypt/TrueCrypt volume header" },
+  { name: "KeePass KDBX header", re: /^\x03\xd9\xa2\x9a/, detail: "KeePass 2.x encrypted database header" },
+  { name: "ZIP archive (encrypted central directory)", re: /PK\x03\x04/, detail: "Check encryption bit – may be encrypted" },
+  { name: "7z encrypted archive", re: /^7z\xbc\xaf\x27\x1c/, detail: "7z signature; encryption if AES codec present" },
+  { name: "RAR5 encrypted", re: /^Rar!\x1a\x07\x01\x00/, detail: "RAR5 with encryption header" },
+  { name: "PDF encrypted", re: /%PDF-.*\/Encrypt/, detail: "PDF with encryption dictionary" },
+];
+function identifyCiphertext(input) {
+  const results = [];
+  for (const sig of CIPHER_SIGS) {
+    if (sig.re.test(input)) results.push({ type: sig.name, detail: sig.detail, confidence: "high" });
+  }
+  // also JWT
+  const jwt = tryJWT(input);
+  if (jwt) results.push({ type: "JWT (JSON Web Token)", detail: "Signed/encrypted token", confidence: "high" });
+  return results;
+}
+
+// ---------- RECURSIVE ENCODING DECODER ----------
+function tryDecodingChain(input, maxChain=5) {
+  const decoders = [
+    { name: 'Base85/Ascii85', fn: decodeBase85 },
+    { name: 'Base64', fn: tryBase64Decode },
+    { name: 'Base32', fn: decodeBase32 },
+    { name: 'Base58', fn: tryBase58 },
+    { name: 'URL', fn: tryUrlDecode },
+    { name: 'HTML entities', fn: tryHtmlDecode },
+    { name: 'ROT13', fn: tryROT13 },
+    { name: 'Quoted-Printable', fn: tryQP },
+    { name: 'Punycode', fn: tryPunycode },
+    { name: 'Hexadecimal', fn: tryHexDecode },
+    { name: 'JWT decode', fn: tryJWTDecode },
+  ];
+  let chain = [];
+  let current = input;
+  for (let i=0; i<maxChain; i++) {
+    let found = false;
+    for (const d of decoders) {
+      const res = d.fn(current);
+      if (res && res !== current) {
+        chain.push({ layer: chain.length+1, encoder: d.name, decoded: res.slice(0,300) });
+        current = res;
+        found = true;
+        break;
+      }
+    }
+    if (!found) break;
+  }
+  return chain;
+}
+
+// Decoding implementations (simplified but functional)
+function tryBase64Decode(str) {
+  try {
+    const cleaned = str.replace(/\s/g,'');
+    if (!/^[A-Za-z0-9+/=]+$/.test(cleaned)) return null;
+    return atob(cleaned);
+  } catch { return null; }
+}
+function decodeBase32(str) {
+  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const cleaned = str.replace(/[=\s]/g,'').toUpperCase();
+  if (!/^[A-Z2-7]+$/.test(cleaned)) return null;
+  let bits = '';
+  for (const ch of cleaned) {
+    const idx = alpha.indexOf(ch);
+    if (idx===-1) return null;
+    bits += idx.toString(2).padStart(5,'0');
+  }
+  const bytes = [];
+  for (let i=0; i+8<=bits.length; i+=8) bytes.push(parseInt(bits.substr(i,8),2));
+  return String.fromCharCode(...bytes);
+}
+function tryBase58(str) {
+  if (/^[A-HJ-NP-Za-km-z1-9]+$/.test(str) && str.length>3) return str + ' [Base58 – manual decode needed]';
+  return null;
+}
+function decodeBase85(str) {
+  if (!/^[A-Za-z0-9!#$%&()*+,\-;<=>?@^_`{|}~]+$/.test(str)) return null;
+  return str + ' [Base85 detected but full decode not implemented in JS without bigint – use CyberChef]';
+}
+function tryUrlDecode(str) {
+  if (!/%[0-9A-F]{2}/i.test(str)) return null;
+  try { return decodeURIComponent(str); } catch { return null; }
+}
+function tryHtmlDecode(str) {
+  if (!/&[#a-zA-Z0-9]+;/.test(str)) return null;
+  const doc = new DOMParser().parseFromString(str, 'text/html');
+  return doc.documentElement.textContent;
+}
+function tryROT13(str) {
+  return str.replace(/[a-zA-Z]/g, c => String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26));
+}
+function tryQP(str) {
+  if (!/=[0-9A-F]{2}/i.test(str)) return null;
+  return str.replace(/=([0-9A-F]{2})/gi, (_,hex)=>String.fromCharCode(parseInt(hex,16)));
+}
+function tryPunycode(str) {
+  if (str.startsWith('xn--')) return str + ' [punycode]';
+  return null;
+}
+function tryHexDecode(str) {
+  const cleaned = str.replace(/\s/g,'');
+  if (!/^[0-9a-fA-F]+$/.test(cleaned) || cleaned.length%2!==0) return null;
+  const bytes = [];
+  for (let i=0;i<cleaned.length;i+=2) bytes.push(parseInt(cleaned.substr(i,2),16));
+  return String.fromCharCode(...bytes);
+}
+function tryJWTDecode(str) {
+  const parts = str.split('.');
+  if (parts.length===3 && parts.every(p=>/^[A-Za-z0-9_-]+$/.test(p))) {
+    try {
+      const h = JSON.parse(atob(parts[0].replace(/-/g,'+').replace(/_/g,'/')));
+      const p = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
+      return `Header: ${JSON.stringify(h)}\nPayload: ${JSON.stringify(p)}`;
+    } catch { return null; }
+  }
+  return null;
+}
+function tryJWT(str) { return tryJWTDecode(str) !== null; }
+
+// ---------- FILE MAGIC DETECTION ----------
+const ENCRYPTED_FILE_MAGICS = [
+  { sig: [0x50, 0x4B, 0x03, 0x04], name: 'ZIP archive (check encryption flag)' },
+  { sig: [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C], name: '7z archive (possible encryption)' },
+  { sig: [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00], name: 'RAR5 archive (encrypted if header flag set)' },
+  { sig: [0x25, 0x50, 0x44, 0x46], name: 'PDF (check for /Encrypt)' },
+  { sig: [0x03, 0xD9, 0xA2, 0x9A], name: 'KeePass KDBX (encrypted database)' },
+  { sig: [0x56, 0x45, 0x52, 0x41], name: 'VeraCrypt volume header' },
+  { sig: [0x54, 0x52, 0x55, 0x45], name: 'TrueCrypt volume header' },
+  { sig: [0x00, 0x00, 0x00, 0x0C, 0x6A, 0x50], name: 'JPEG 2000 (possibly encrypted)' },
+  { sig: [0x43, 0x72, 0x79, 0x70, 0x74, 0x6F, 0x72], name: 'Microsoft Office encrypted document' },
+];
+function detectFileMagic(bytes) {
+  for (const m of ENCRYPTED_FILE_MAGICS) {
+    if (bytes.length >= m.sig.length && m.sig.every((b,i)=> bytes[i]===b)) {
+      return m.name;
+    }
+  }
+  return null;
+}
+
+// ========== MAIN ANALYSIS FLOW ==========
+function fullAnalyze(input, fileBytes=null) {
+  const text = input;
+  const entropy = shannonEntropy(text);
+  const chi = chiSquared(text);
+  const piEst = monteCarloPiEstimate(text);
+  const classification = classifyEntropy(entropy, chi, piEst);
+  const hashes = identifyHashes(text);
+  const ciphers = identifyCiphertext(text);
+  const chain = tryDecodingChain(text);
+
+  let fileMagic = null;
+  if (fileBytes) fileMagic = detectFileMagic(new Uint8Array(fileBytes));
+
+  return { entropy, chi, piEst, classification, hashes, ciphers, chain, fileMagic };
+}
+
+// ========== RENDERING ==========
+function renderSummary(analysis) {
+  const { entropy, chi, piEst, classification } = analysis;
+  const fillColor = classification.verdict.includes('Encrypted') ? '#ef4444' : (classification.verdict.includes('Compressed')?'#f59e0b':'#22c55e');
+  document.getElementById('entropyContent').innerHTML = `
+    <div style="display:flex; gap:2rem; flex-wrap:wrap;">
+      <div><strong>Shannon Entropy</strong>: ${entropy.toFixed(3)} bits/char</div>
+      <div><strong>Chi‑Square</strong>: ${chi.toFixed(1)}</div>
+      <div><strong>Monte Carlo π</strong>: ${piEst.toFixed(5)}</div>
+    </div>
+    <div class="entropy-bar" style="margin-top:12px;"><div class="entropy-fill" style="width:${Math.min(entropy*10,100)}%; background:${fillColor}"></div></div>
+    <div class="verdict-box" style="color:${fillColor}">${classification.verdict} (${classification.confidence} confidence)</div>
+    ${analysis.fileMagic ? `<div style="margin-top:0.8rem;">🗂️ File magic: <strong>${analysis.fileMagic}</strong></div>` : ''}
+  `;
+}
+function renderHashes(hashes) {
+  if (!hashes.length) return document.getElementById('hashesContent').innerHTML = 'No standard hash pattern detected.';
+  let html = '';
+  hashes.forEach(h => {
+    html += `<div class="result-row"><span>🔹 ${h.hash}</span> <span class="badge ${h.confidence==='high'?'high-conf':'med-conf'}">${h.confidence}</span></div>`;
+  });
+  document.getElementById('hashesContent').innerHTML = html;
+}
+function renderCiphers(ciphers) {
+  if (!ciphers.length) return document.getElementById('cipherContent').innerHTML = 'No known ciphertext / container format detected.';
+  let html = '';
+  ciphers.forEach(c => {
+    html += `<div class="result-row"><span>🧪 ${c.type}</span><span class="badge high-conf">high</span><br><small style="color:#94a3b8;">${c.detail}</small></div>`;
+  });
+  document.getElementById('cipherContent').innerHTML = html;
+}
+function renderEncodingChain(chain) {
+  if (!chain.length) return document.getElementById('encodingContent').innerHTML = 'No decodable encoding layers found.';
+  let html = '<ol style="padding-left:1.2rem;">';
+  chain.forEach(layer => {
+    html += `<li><strong>${layer.encoder}</strong> → <span style="font-family:monospace; font-size:0.85rem;">${escapeHTML(layer.decoded)}</span></li>`;
+  });
+  html += '</ol>';
+  document.getElementById('encodingContent').innerHTML = html;
+}
+
+// Manual decode
+document.getElementById('manualDecodeBtn').addEventListener('click', ()=>{
+  const algo = document.getElementById('encodingSelect').value;
+  const raw = document.getElementById('inputData').value;
+  let result = '';
+  if (algo==='base64') result = tryBase64Decode(raw);
+  else if (algo==='base32') result = decodeBase32(raw);
+  else if (algo==='base58') result = tryBase58(raw)||'Not valid Base58';
+  else if (algo==='base85') result = decodeBase85(raw);
+  else if (algo==='hex') result = tryHexDecode(raw);
+  else if (algo==='url') result = tryUrlDecode(raw);
+  else if (algo==='html') result = tryHtmlDecode(raw);
+  else if (algo==='rot13') result = tryROT13(raw);
+  else if (algo==='punycode') result = tryPunycode(raw);
+  else if (algo==='qp') result = tryQP(raw);
+  else if (algo==='jwt') result = tryJWTDecode(raw);
+  else if (algo==='xor') {
+    const key = document.getElementById('xorKey').value;
+    if (!key) { result = 'Enter XOR key'; }
+    else {
+      let out = '';
+      for (let i=0;i<raw.length;i++) out += String.fromCharCode(raw.charCodeAt(i) ^ key.charCodeAt(i%key.length));
+      result = out;
+    }
+  }
+  document.getElementById('manualResult').textContent = result || 'Decoding failed.';
+});
+
+function escapeHTML(str) { return str.replace(/[&<>]/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])); }
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.dataset.tab;
+    ['summary','hashes','cipher','encoding','manual'].forEach(id=>{
+      document.getElementById(id+'Panel').style.display = (id===target) ? 'block' : 'none';
+    });
+  });
+});
+
+// Main button
+document.getElementById('analyzeBtn').addEventListener('click', ()=>{
+  const input = document.getElementById('inputData').value;
+  const analysis = fullAnalyze(input);
+  renderSummary(analysis);
+  renderHashes(analysis.hashes);
+  renderCiphers(analysis.ciphers);
+  renderEncodingChain(analysis.chain);
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  document.getElementById('inputData').value = '';
+  document.getElementById('entropyContent').innerHTML = 'Run analysis to see results.';
+  document.getElementById('hashesContent').innerHTML = '';
+  document.getElementById('cipherContent').innerHTML = '';
+  document.getElementById('encodingContent').innerHTML = '';
+});
+
+// Drag and drop
+const dropZone = document.getElementById('dropZone');
+['dragenter','dragover'].forEach(ev=> dropZone.addEventListener(ev, e=>{ e.preventDefault(); dropZone.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev=> dropZone.addEventListener(ev, e=>{ e.preventDefault(); dropZone.classList.remove('dragover'); }));
+dropZone.addEventListener('drop', async e=>{
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const buffer = await file.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  const magic = detectFileMagic(bytes);
+  document.getElementById('fileInfo').innerText = magic ? `📦 Detected: ${magic} (first ${Math.min(bytes.length,16)} bytes: ${Array.from(bytes.slice(0,8)).map(b=>b.toString(16).padStart(2,'0')).join(' ')})` : 'No known encrypted file signature found.';
+  // Optionally re-analyze with file bytes
+  const input = document.getElementById('inputData').value;
+  const analysis = fullAnalyze(input, buffer);
+  renderSummary(analysis);
+});
+</script>
+</body>
+</html>
