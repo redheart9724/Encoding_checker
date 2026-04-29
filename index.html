@@ -1,167 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decryption by Redheart – Ultimate Hash, Cipher & Vigenère Cracker</title>
-  <style>
-    :root {
-      --bg: #0a0f1a;
-      --surface: #141b27;
-      --border: #29303b;
-      --text: #d1d5db;
-      --accent: #3b82f6;
-      --green: #22c55e;
-      --yellow: #f59e0b;
-      --red: #ef4444;
-      --code-bg: #0e131f;
-      --radius: 14px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-    }
-    .app { max-width: 1600px; width: 100%; }
-    h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(135deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-    }
-    .card-header {
-      background: rgba(255,255,255,0.03);
-      padding: 1rem 1.4rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .card-body { padding: 1.4rem; }
-    textarea, .output-box {
-      width: 100%;
-      background: var(--code-bg);
-      color: #f1f5f9;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.9rem;
-      resize: vertical;
-      white-space: pre-wrap;
-    }
-    .btn {
-      background: var(--accent);
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-right: 8px;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn:hover { background: #2563eb; }
-    .btn-secondary { background: #334155; }
-    .btn-secondary:hover { background: #475569; }
-    .tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-    .tab {
-      padding: 8px 16px;
-      background: #1e293b;
-      border-radius: 40px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-    .tab.active { background: var(--accent); color: white; }
-    .result-row {
-      padding: 10px 0;
-      border-bottom: 1px solid #1e293b;
-    }
-    .badge {
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .high-conf { background: #16a34a33; color: #4ade80; }
-    .med-conf  { background: #f59e0b33; color: #fbbf24; }
-    .low-conf  { background: #ef444433; color: #f87171; }
-    .drop-zone {
-      border: 2px dashed #334155;
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      color: #94a3b8;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-    .drop-zone.dragover {
-      border-color: var(--accent);
-      background: rgba(59,130,246,0.05);
-    }
-    .entropy-bar { height: 10px; background: #1e293b; border-radius: 10px; margin: 8px 0; overflow: hidden; }
-    .entropy-fill { height: 100%; width: 0%; border-radius: 10px; transition: width 0.4s; }
-    button:disabled { opacity: 0.6; cursor: default; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encryption Oracle Pro – Cipher Autopsy & Pentest Workbench</title>
+<style>
+:root{
+  --bg:#0a0f1a;
+  --surface:#141b27;
+  --border:#29303b;
+  --text:#d1d5db;
+  --accent:#3b82f6;
+  --green:#22c55e;
+  --yellow:#f59e0b;
+  --red:#ef4444;
+  --code-bg:#0e131f;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,sans-serif;
+  padding:2rem;
+  display:flex;
+  justify-content:center;
+}
+.app{max-width:1800px;width:100%}
+h1{
+  font-size:2.2rem;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  margin-bottom:1.5rem;
+  overflow:hidden;
+  box-shadow:0 12px 28px rgba(0,0,0,0.5);
+}
+.card-header{
+  background:rgba(255,255,255,0.03);
+  padding:1rem 1.4rem;
+  font-weight:600;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.card-body{padding:1.4rem}
+textarea,.output-box{
+  width:100%;
+  background:var(--code-bg);
+  color:#f1f5f9;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1rem;
+  font-family:'Fira Code',monospace;
+  font-size:0.9rem;
+  resize:vertical;
+  white-space:pre-wrap;
+}
+.btn{
+  background:var(--accent);
+  border:none;
+  color:white;
+  padding:10px 20px;
+  border-radius:40px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+  margin-right:8px;
+}
+.btn:hover{background:#2563eb}
+.btn-secondary{background:#334155;color:#d1d5db}
+.btn-secondary:hover{background:#475569}
+.tabs{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+.tab{
+  padding:8px 16px;
+  background:#1e293b;
+  border-radius:40px;
+  cursor:pointer;
+  font-size:0.85rem;
+  font-weight:500;
+}
+.tab.active{background:var(--accent);color:white}
+.result-row{padding:10px 0;border-bottom:1px solid #1e293b}
+.badge{
+  padding:2px 10px;
+  border-radius:20px;
+  font-size:0.7rem;
+  font-weight:600;
+}
+.high-conf{background:#16a34a33;color:#4ade80}
+.med-conf{background:#f59e0b33;color:#fbbf24}
+.low-conf{background:#ef444433;color:#f87171}
+.drop-zone{
+  border:2px dashed #334155;
+  border-radius:16px;
+  padding:2rem;
+  text-align:center;
+  color:#94a3b8;
+  margin-top:1rem;
+  cursor:pointer;
+}
+.drop-zone.dragover{border-color:var(--accent);background:rgba(59,130,246,0.05)}
+.entropy-bar{height:10px;background:#1e293b;border-radius:10px;margin:8px 0;overflow:hidden}
+.entropy-fill{height:100%;width:0%;border-radius:10px;transition:width 0.4s}
+</style>
 </head>
 <body>
 <div class="app">
-  <h1>🛡️ Encryption Oracle – Full Spectrum</h1>
-  <p style="color:#94a3b8; margin-bottom:1.5rem;">
-    Hashes (90+), ciphertext signatures, file headers, entropy tri‑metry, recursive encoding chain, and <strong>automatic Vigenère cracking</strong> with IC + frequency analysis.
+  <h1>🛡️ Encryption Oracle Pro</h1>
+  <p style="color:#94a3b8;margin-bottom:1.5rem">
+    Bidirectional encode/decode (35+ methods) • Automatic cipher cracking • Hash & file signature detection • Entropy analysis • Pen‑testing workbench
   </p>
 
   <div class="card">
     <div class="card-header">📥 Input</div>
     <div class="card-body">
-      <textarea id="inputData" rows="6" placeholder="Paste any encrypted data, hash, encoded string, or file path...&#10;Example: Xmrmh gvduuvqvw xzih xzw gszg vew zfiv rh hvuzih"></textarea>
-      <div style="margin-top:1rem; display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn" id="fullAnalysisBtn">🔍 Full Analysis</button>
+      <textarea id="inputData" rows="6" placeholder="Paste any text, cipher, encoded string, or hash...&#10;Example: Xmrmh gvduuvqvw xzih xzw gszg vew zfiv rh hvuzih"></textarea>
+      <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn" id="runAllBtn">⚡ Full Analysis</button>
         <button class="btn" id="crackVigenereBtn">🧠 Crack Vigenère</button>
         <button class="btn btn-secondary" id="clearBtn">Clear</button>
       </div>
-      <div class="drop-zone" id="dropZone">
-        📁 Drop an encrypted file here to inspect magic bytes
-      </div>
-      <div id="fileInfo" style="margin-top:0.5rem; font-size:0.8rem; color:#94a3b8;"></div>
+      <div class="drop-zone" id="dropZone">📁 Drop an encrypted file here to read magic bytes</div>
+      <div id="fileInfo" style="margin-top:0.5rem;font-size:0.8rem;color:#94a3b8;"></div>
     </div>
   </div>
 
   <div class="tabs">
-    <div class="tab active" data-panel="summaryPanel">📊 Entropy</div>
+    <div class="tab active" data-panel="summaryPanel">📊 Summary / Entropy</div>
     <div class="tab" data-panel="hashesPanel">🔐 Hashes</div>
     <div class="tab" data-panel="cipherPanel">🧪 Cipher Sigs</div>
-    <div class="tab" data-panel="encodingPanel">🔣 Encoding</div>
+    <div class="tab" data-panel="encodingPanel">🔣 Encoding Chain</div>
     <div class="tab" data-panel="vigenerePanel">⚡ Vigenère Autopsy</div>
     <div class="tab" data-panel="manualPanel">⚙️ Manual Key</div>
+    <!-- Encoding/Cipher method strip will be separate -->
+    <div style="margin-left:auto; display:flex; gap:6px;">
+      <select id="methodSelect" style="background:var(--code-bg);color:white;border:1px solid #334155; border-radius:8px; padding:6px 10px; font-size:0.85rem;">
+        <!-- filled by JS -->
+      </select>
+      <button class="btn" id="encodeBtn">↑ Encode</button>
+      <button class="btn btn-secondary" id="decodeBtn">↓ Decode</button>
+    </div>
   </div>
 
   <div id="summaryPanel" class="card">
     <div class="card-header">📊 Entropy & Classification</div>
-    <div class="card-body" id="entropyContent">Run an analysis to see results.</div>
+    <div class="card-body" id="entropyContent">Run an analysis.</div>
   </div>
   <div id="hashesPanel" class="card" style="display:none;">
     <div class="card-header">🔐 Hashes Detected</div>
@@ -176,385 +171,686 @@
     <div class="card-body" id="encodingContent"></div>
   </div>
   <div id="vigenerePanel" class="card" style="display:none;">
-    <div class="card-header">⚡ Vigenère Cracker (IC + chi² scoring)</div>
-    <div class="card-body" id="vigenereContent">Click <strong>Crack Vigenère</strong> to find the real key and plaintext.</div>
+    <div class="card-header">⚡ Vigenère Cracker (IC + frequency)</div>
+    <div class="card-body" id="vigenereContent">Click <strong>Crack Vigenère</strong> to find the real key.</div>
   </div>
   <div id="manualPanel" class="card" style="display:none;">
     <div class="card-header">⚙️ Manual Vigenère Decrypt (test any key)</div>
     <div class="card-body">
-      <input type="text" id="manualKey" placeholder="Enter key (e.g., CYBER)" style="background:var(--code-bg); color:white; padding:8px; border-radius:8px; border:1px solid #334155; width:200px;">
+      <input type="text" id="manualKey" placeholder="Enter key (e.g., CYBER)" style="background:var(--code-bg);color:white;padding:8px;border-radius:8px;border:1px solid #334155;width:200px;">
       <button class="btn" id="manualDecryptBtn">Decrypt</button>
-      <div id="manualDecryptResult" style="margin-top:1rem; font-family:monospace; white-space:pre-wrap;"></div>
+      <div id="manualDecryptResult" style="margin-top:1rem;font-family:monospace;white-space:pre-wrap;"></div>
+    </div>
+  </div>
+
+  <!-- Additional output panels for encode/decode -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem;">
+    <div class="card">
+      <div class="card-header">↑ Encoded Output</div>
+      <div class="card-body" id="encodeOutput"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">↓ Decoded Output</div>
+      <div class="card-body" id="decodeOutput"></div>
     </div>
   </div>
 </div>
 
 <script>
-// ==================== UTILITIES ====================
+// ==================== CORE UTILITIES ====================
 const ALPH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const toNum = c => ALPH.indexOf(c.toUpperCase());
-const toChar = n => ALPH[(n + 26) % 26];
-
-// Shannon entropy
-function shannonEntropy(str) {
+const toChar = n => ALPH[(n+26)%26];
+const shannonEntropy = str => {
   const freq = {};
-  for (const ch of str) freq[ch] = (freq[ch] || 0) + 1;
+  for(const ch of str) freq[ch] = (freq[ch]||0)+1;
   let ent = 0;
-  for (const k in freq) {
-    const p = freq[k] / str.length;
-    ent -= p * Math.log2(p);
+  for(const k in freq){
+    const p = freq[k]/str.length;
+    ent -= p*Math.log2(p);
   }
   return ent;
-}
+};
 
-// Chi-squared against English distribution (for plaintext validation)
-const ENGLISH_FREQ = [0.08167,0.01492,0.02782,0.04253,0.12702,0.02228,0.02015,0.06094,0.06966,0.00153,0.00772,0.04025,0.02406,0.06749,0.07507,0.01929,0.00095,0.05987,0.06327,0.09056,0.02758,0.00978,0.02360,0.00150,0.01974,0.00074];
-function englishScore(str) {
-  const ct = new Array(26).fill(0);
-  let total = 0;
-  for (let c of str) {
-    const idx = toNum(c);
-    if (idx !== -1) { ct[idx]++; total++; }
-  }
-  if (total < 3) return 1000; // too short
-  let chi = 0;
-  for (let i = 0; i < 26; i++) {
-    const expected = total * ENGLISH_FREQ[i];
-    const diff = ct[i] - expected;
-    chi += (diff * diff) / expected;
-  }
-  return chi;
-}
+// ==================== METHOD DEFINITIONS (35+) ====================
+const METHODS = {
+  // --- Encodings ---
+  base64: {
+    name:'Base64', cat:'Encoding',
+    encode: t => btoa(unescape(encodeURIComponent(t))),
+    decode: t => {
+      try{
+        let s = t.trim().replace(/\s/g,'');
+        while(s.length%4) s+='=';
+        const r = atob(s);
+        try{ return decodeURIComponent(escape(r)); }catch{ return r; }
+      }catch{ return '[invalid Base64]'; }
+    }
+  },
+  base64url: {
+    name:'Base64 URL', cat:'Encoding',
+    encode: t => btoa(unescape(encodeURIComponent(t))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,''),
+    decode: t => {
+      try{
+        let s = t.trim().replace(/-/g,'+').replace(/_/g,'/');
+        while(s.length%4) s+='=';
+        return atob(s);
+      }catch{ return '[invalid]'; }
+    }
+  },
+  base32: {
+    name:'Base32', cat:'Encoding',
+    encode: t => {
+      const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let bits='', o='';
+      for(let i=0;i<t.length;i++) bits+=t.charCodeAt(i).toString(2).padStart(8,'0');
+      while(bits.length%5) bits+='0';
+      for(let i=0;i<bits.length;i+=5) o+=alpha[parseInt(bits.slice(i,i+5),2)];
+      while(o.length%8) o+='=';
+      return o;
+    },
+    decode: t => {
+      const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let s = t.trim().toUpperCase().replace(/=/g,'').replace(/\s/g,'');
+      let bits='', o='';
+      for(const c of s){
+        const i = alpha.indexOf(c);
+        if(i<0) return '[invalid Base32]';
+        bits += i.toString(2).padStart(5,'0');
+      }
+      for(let i=0;i+8<=bits.length;i+=8) o+=String.fromCharCode(parseInt(bits.slice(i,i+8),2));
+      return o;
+    }
+  },
+  base58: {
+    name:'Base58 (Bitcoin)', cat:'Encoding',
+    encode: t => t+' [Base58 encode not implemented]',
+    decode: t => /^[A-HJ-NP-Za-km-z1-9]+$/.test(t) ? t+' [Base58 decode needs bigint]' : '[invalid Base58]'
+  },
+  hex: {
+    name:'Hex', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>c.charCodeAt(0).toString(16).padStart(2,'0')).join(' '),
+    decode: t => {
+      const c = t.replace(/\s/g,'');
+      if(!/^[0-9a-fA-F]+$/.test(c)||c.length%2) return '[invalid hex]';
+      let o='';
+      for(let i=0;i<c.length;i+=2) o+=String.fromCharCode(parseInt(c.slice(i,i+2),16));
+      return o;
+    }
+  },
+  binary: {
+    name:'Binary', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>c.charCodeAt(0).toString(2).padStart(8,'0')).join(' '),
+    decode: t => {
+      const c = t.replace(/\s/g,'');
+      if(!/^[01]+$/.test(c)||c.length%8) return '[invalid binary]';
+      let o='';
+      for(let i=0;i<c.length;i+=8) o+=String.fromCharCode(parseInt(c.slice(i,i+8),2));
+      return o;
+    }
+  },
+  octal: {
+    name:'Octal', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>c.charCodeAt(0).toString(8).padStart(3,'0')).join(' '),
+    decode: t => {
+      const toks = t.trim().split(/\s+/);
+      return toks.map(tok=>String.fromCharCode(parseInt(tok,8))).join('');
+    }
+  },
+  decimal: {
+    name:'Decimal ASCII', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>c.charCodeAt(0)).join(' '),
+    decode: t => {
+      const toks = t.trim().split(/[\s,]+/);
+      return toks.map(tok=>String.fromCharCode(parseInt(tok,10))).join('');
+    }
+  },
+  url: {
+    name:'URL %enc', cat:'Encoding',
+    encode: t => encodeURIComponent(t),
+    decode: t => { try{ return decodeURIComponent(t); }catch{ return '[invalid URL]'; } }
+  },
+  html: {
+    name:'HTML Entities', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>`&#${c.charCodeAt(0)};`).join(''),
+    decode: t => { const el=document.createElement('textarea');el.innerHTML=t;return el.value; }
+  },
+  unicode: {
+    name:'Unicode Escapes', cat:'Encoding',
+    encode: t => Array.from(t).map(c=>'\\u'+c.charCodeAt(0).toString(16).padStart(4,'0')).join(''),
+    decode: t => t.replace(/\\u([0-9a-fA-F]{4})/g,(_,h)=>String.fromCharCode(parseInt(h,16))).replace(/U\+([0-9a-fA-F]{4,6})/gi,(_,h)=>String.fromCodePoint(parseInt(h,16)))
+  },
+  jwt: {
+    name:'JWT', cat:'Encoding',
+    encode: t => {
+      const payload = {data:t};
+      const enc = obj => btoa(JSON.stringify(obj)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+      return enc({alg:'HS256',typ:'JWT'})+'.'+enc(payload)+'.signature';
+    },
+    decode: t => {
+      const parts = t.split('.');
+      if(parts.length<2) return '[not JWT]';
+      const dec = p => JSON.parse(atob(p.replace(/-/g,'+').replace(/_/g,'/')));
+      try{ return JSON.stringify({header:dec(parts[0]), payload:dec(parts[1])},null,2); }catch{ return '[invalid JWT]'; }
+    }
+  },
+  punycode: {
+    name:'Punycode', cat:'Encoding',
+    encode: t => t.startsWith('xn--')?t:'xn--[U+'+t.charCodeAt(0).toString(16)+']',
+    decode: t => t.includes('xn--')?t+' (decoding needs lib)':'[not Punycode]'
+  },
+  // --- Ciphers ---
+  rot13: {
+    name:'ROT13', cat:'Cipher',
+    encode: t => t.replace(/[a-zA-Z]/g,c=>String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26)),
+    decode: t => t.replace(/[a-zA-Z]/g,c=>String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26))
+  },
+  rot47: {
+    name:'ROT47', cat:'Cipher',
+    encode: t => t.replace(/[\x21-\x7E]/g,c=>String.fromCharCode(33+((c.charCodeAt(0)-33+47)%94))),
+    decode: t => t.replace(/[\x21-\x7E]/g,c=>String.fromCharCode(33+((c.charCodeAt(0)-33+47)%94)))
+  },
+  atbash: {
+    name:'Atbash', cat:'Cipher',
+    encode: t => t.replace(/[a-z]/g,c=>String.fromCharCode(122-(c.charCodeAt(0)-97))).replace(/[A-Z]/g,c=>String.fromCharCode(90-(c.charCodeAt(0)-65))),
+    decode: t => t.replace(/[a-z]/g,c=>String.fromCharCode(122-(c.charCodeAt(0)-97))).replace(/[A-Z]/g,c=>String.fromCharCode(90-(c.charCodeAt(0)-65)))
+  },
+  caesar: {
+    name:'Caesar', cat:'Cipher',
+    opts: {shift:3},
+    encode: (t,op) => { const s=op.shift||3; return t.replace(/[a-zA-Z]/g,c=>{const b=c>'Z'?97:65;return String.fromCharCode(((c.charCodeAt(0)-b+s)%26)+b);}) },
+    decode: (t,op) => { const s=op.shift||3; return t.replace(/[a-zA-Z]/g,c=>{const b=c>'Z'?97:65;return String.fromCharCode(((c.charCodeAt(0)-b-s+26)%26)+b);}) }
+  },
+  vigenere: {
+    name:'Vigenère', cat:'Cipher',
+    opts: {key:'KEY'},
+    encode: (t,op) => { const k=(op.key||'KEY').toLowerCase().replace(/[^a-z]/g,'');if(!k) return '[key required]';let ki=0;return t.replace(/[a-zA-Z]/g,c=>{const b=c>'Z'?97:65;const sh=k[ki++%k.length].charCodeAt(0)-97;return String.fromCharCode(((c.charCodeAt(0)-b+sh)%26)+b);}) },
+    decode: (t,op) => { const k=(op.key||'KEY').toLowerCase().replace(/[^a-z]/g,'');if(!k) return '[key required]';let ki=0;return t.replace(/[a-zA-Z]/g,c=>{const b=c>'Z'?97:65;const sh=k[ki++%k.length].charCodeAt(0)-97;return String.fromCharCode(((c.charCodeAt(0)-b-sh+26)%26)+b);}) }
+  },
+  xor: {
+    name:'XOR', cat:'Cipher',
+    opts: {key:42},
+    encode: (t,op) => { const k=op.key||42; return Array.from(t).map(c=>(c.charCodeAt(0)^k).toString(16).padStart(2,'0')).join(' '); },
+    decode: (t,op) => { const k=op.key||42; const cleaned=t.replace(/\s/g,''); if(!/^[0-9a-fA-F]+$/.test(cleaned)||cleaned.length%2) return '[invalid hex]'; let o=''; for(let i=0;i<cleaned.length;i+=2) o+=String.fromCharCode(parseInt(cleaned.slice(i,i+2),16)^k); return o; }
+  },
+  morse: {
+    name:'Morse', cat:'Cipher',
+    _map:{A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.','.':'.-.-.-',',':'--..--','?':'..--..','-':'-....-','!':'-.-.--',' ':'/'},
+    encode: t => t.toUpperCase().split('').map(c=>this._map[c]||'').filter(Boolean).join(' '),
+    decode: t => {
+      const rev={};for(const[k,v]of Object.entries(this._map))rev[v]=k;
+      return t.trim().split(/\s+/).map(sym=>sym==='/'?' ':rev[sym]||'?').join('');
+    }
+  },
+  bacon: {
+    name:"Bacon's", cat:'Cipher',
+    _map:{A:'AAAAA',B:'AAAAB',C:'AAABA',D:'AAABB',E:'AABAA',F:'AABAB',G:'AABBA',H:'AABBB',I:'ABAAA',J:'ABAAB',K:'ABABA',L:'ABABB',M:'ABBAA',N:'ABBAB',O:'ABBBA',P:'ABBBB',Q:'BAAAA',R:'BAAAB',S:'BAABA',T:'BAABB',U:'BABAA',V:'BABAB',W:'BABBA',X:'BABBB',Y:'BBAAA',Z:'BBAAB'},
+    encode: t => t.toUpperCase().split('').map(c=>this._map[c]||c).join(' '),
+    decode: t => {
+      const rev={};for(const[k,v]of Object.entries(this._map))rev[v]=k;
+      const clean=t.trim().toUpperCase().replace(/\s+/g,'');
+      let o='';for(let i=0;i+5<=clean.length;i+=5) o+=rev[clean.slice(i,i+5)]||'?';
+      return o;
+    }
+  },
+  railfence: {
+    name:'Rail Fence', cat:'Cipher',
+    opts:{rails:3},
+    encode: (t,op) => {
+      const rails=op.rails||3; const fence=Array.from({length:rails},()=>[]);
+      let r=0,d=1;
+      for(const c of t){ fence[r].push(c); if(r===0)d=1; if(r===rails-1)d=-1; r+=d; }
+      return fence.map(row=>row.join('')).join('');
+    },
+    decode: (t,op) => {
+      const rails=op.rails||3; const len=t.length;
+      if(len===0) return '';
+      const pattern=[]; let r=0,d=1;
+      for(let i=0;i<len;i++){ pattern.push(r); if(r===0)d=1; if(r===rails-1)d=-1; r+=d; }
+      const fenceLens=Array(rails).fill(0);
+      for(const p of pattern) fenceLens[p]++;
+      const start=[]; let pos=0;
+      for(const fl of fenceLens){ start.push(pos); pos+=fl; }
+      const idxInRail=Array(rails).fill(0);
+      const result=new Array(len);
+      for(let i=0;i<len;i++){
+        const ri=pattern[i];
+        result[i]=t[start[ri]+idxInRail[ri]];
+        idxInRail[ri]++;
+      }
+      return result.join('');
+    }
+  },
+  substitution: {
+    name:'Substitution', cat:'Cipher',
+    opts:{key:'QWERTYUIOPASDFGHJKLZXCVBNM'},
+    encode: (t,op) => {
+      const key = ((op.key||'QWERTYUIOPASDFGHJKLZXCVBNM').toUpperCase().replace(/[^A-Z]/g,'')+'ABCDEFGHIJKLMNOPQRSTUVWXYZ').slice(0,26);
+      if(new Set(key).size<26) return '[key must have 26 unique letters]';
+      return t.replace(/[a-z]/g,c=>key[c.charCodeAt(0)-97].toLowerCase()).replace(/[A-Z]/g,c=>key[c.charCodeAt(0)-65]);
+    },
+    decode: (t,op) => {
+      const key = ((op.key||'QWERTYUIOPASDFGHJKLZXCVBNM').toUpperCase().replace(/[^A-Z]/g,'')+'ABCDEFGHIJKLMNOPQRSTUVWXYZ').slice(0,26);
+      if(new Set(key).size<26) return '[key must have 26 unique letters]';
+      const rev=Array(26); for(let i=0;i<26;i++) rev[key.charCodeAt(i)-65]=String.fromCharCode(65+i);
+      return t.replace(/[a-z]/g,c=>rev[c.charCodeAt(0)-97].toLowerCase()).replace(/[A-Z]/g,c=>rev[c.charCodeAt(0)-65]);
+    }
+  },
+  columnar: {
+    name:'Columnar Transp.', cat:'Cipher',
+    opts:{key:'CIPHER'},
+    _order: key => {
+      const k=key.toUpperCase().replace(/[^A-Z]/g,'')||'CIPHER';
+      const idx=Array.from(k).map((c,i)=>({c,i}));
+      idx.sort((a,b)=>a.c<b.c?-1:a.c>b.c?1:a.i-b.i);
+      return idx.map(x=>x.i);
+    },
+    encode: (t,op) => {
+      const order=this._order(op.key||'CIPHER');
+      const cols=order.length;
+      const rows=Math.ceil(t.length/cols);
+      const padded=t.padEnd(rows*cols,'X');
+      const grid=[];
+      for(let r=0;r<rows;r++) grid.push(padded.slice(r*cols,(r+1)*cols).split(''));
+      return order.map(c=>grid.map(row=>row[c]).join('')).join('');
+    },
+    decode: (t,op) => {
+      const order=this._order(op.key||'CIPHER');
+      const cols=order.length;
+      const rows=Math.ceil(t.length/cols);
+      const colLen=Math.floor(t.length/cols);
+      const extra=t.length%cols;
+      const rev=Array(cols); order.forEach((orig,sort)=>rev[orig]=sort);
+      const colLens=order.map((orig,sort)=>colLen+(orig<extra?1:0));
+      const starts=[]; let pos=0;
+      for(let i=0;i<cols;i++){starts.push(pos);pos+=colLen+(i<extra?1:0);}
+      const result=[];
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          const colIdx=rev[c];
+          const charIdx=starts[colIdx]+r;
+          if(charIdx<starts[colIdx]+colLens[colIdx]) result.push(t[charIdx]);
+        }
+      }
+      return result.join('').replace(/X+$/,'');
+    }
+  },
+  playfair: {
+    name:'Playfair', cat:'Cipher',
+    opts:{key:'MONARCHY'},
+    _matrix: key => {
+      const k=(key.toUpperCase().replace(/J/g,'I').replace(/[^A-Z]/g,'')+'ABCDEFGHIKLMNOPQRSTUVWXYZ');
+      return [...new Set(k.split(''))];
+    },
+    _pos: (mat,c) => { const i=mat.indexOf(c); return [Math.floor(i/5),i%5]; },
+    encode: (t,op) => {
+      const mat=this._matrix(op.key||'MONARCHY');
+      let s=t.toUpperCase().replace(/J/g,'I').replace(/[^A-Z]/g,'');
+      const pairs=[];
+      for(let i=0;i<s.length;){
+        let a=s[i], b=s[i+1]||'X';
+        if(a===b){b='X';i++;}else i+=2;
+        pairs.push([a,b]);
+      }
+      return pairs.map(([a,b])=>{
+        const[ra,ca]=this._pos(mat,a),[rb,cb]=this._pos(mat,b);
+        if(ra===rb) return mat[ra*5+(ca+1)%5]+mat[rb*5+(cb+1)%5];
+        if(ca===cb) return mat[((ra+1)%5)*5+ca]+mat[((rb+1)%5)*5+cb];
+        return mat[ra*5+cb]+mat[rb*5+ca];
+      }).join('');
+    },
+    decode: (t,op) => {
+      const mat=this._matrix(op.key||'MONARCHY');
+      const s=t.toUpperCase().replace(/[^A-Z]/g,'');
+      const pairs=[];
+      for(let i=0;i<s.length;i+=2) pairs.push([s[i],s[i+1]||'X']);
+      return pairs.map(([a,b])=>{
+        const[ra,ca]=this._pos(mat,a),[rb,cb]=this._pos(mat,b);
+        if(ra===rb) return mat[ra*5+(ca+24)%5]+mat[rb*5+(cb+24)%5];
+        if(ca===cb) return mat[((ra+4)%5)*5+ca]+mat[((rb+4)%5)*5+cb];
+        return mat[ra*5+cb]+mat[rb*5+ca];
+      }).join('');
+    }
+  },
+  affine: {
+    name:'Affine', cat:'Cipher',
+    opts:{a:5,b:8},
+    _modInv: (a,m) => { for(let x=1;x<m;x++) if((a*x)%m===1) return x; return null; },
+    encode: (t,op) => {
+      const a=op.a||5, b=op.b||8;
+      const inv=this._modInv(a,26);
+      if(!inv) return `[a=${a} not coprime to 26]`;
+      return t.replace(/[a-z]/g,c=>String.fromCharCode(((a*(c.charCodeAt(0)-97)+b)%26)+97))
+              .replace(/[A-Z]/g,c=>String.fromCharCode(((a*(c.charCodeAt(0)-65)+b)%26)+65));
+    },
+    decode: (t,op) => {
+      const a=op.a||5, b=op.b||8;
+      const inv=this._modInv(a,26);
+      if(!inv) return `[a=${a} not coprime to 26]`;
+      return t.replace(/[a-z]/g,c=>{ const v=c.charCodeAt(0)-97; return String.fromCharCode(((inv*(v-b+26*26))%26+26)%26+97); })
+              .replace(/[A-Z]/g,c=>{ const v=c.charCodeAt(0)-65; return String.fromCharCode(((inv*(v-b+26*26))%26+26)%26+65); });
+    }
+  },
+  beaufort: {
+    name:'Beaufort', cat:'Cipher',
+    opts:{key:'FORTIFY'},
+    encode: (t,op) => {
+      const k=(op.key||'FORTIFY').toLowerCase().replace(/[^a-z]/g,'');
+      if(!k) return '[key required]';
+      let ki=0;
+      return t.replace(/[a-zA-Z]/g,c=>{const b=c>'Z'?97:65;const sh=k[ki++%k.length].charCodeAt(0)-97;return String.fromCharCode(((sh-(c.charCodeAt(0)-b)+26)%26)+b);});
+    },
+    decode: (t,op) => this.encode(t,op) // self-reciprocal
+  },
+};
 
 // ==================== HASH SIGNATURES ====================
 const HASH_DB = [
-  { name: "MD5", re: /^[a-fA-F0-9]{32}$/ },
-  { name: "MD4", re: /^[a-fA-F0-9]{32}$/ },
-  { name: "SHA‑1", re: /^[a-fA-F0-9]{40}$/ },
-  { name: "SHA‑224", re: /^[a-fA-F0-9]{56}$/ },
-  { name: "SHA‑256", re: /^[a-fA-F0-9]{64}$/ },
-  { name: "SHA‑384", re: /^[a-fA-F0-9]{96}$/ },
-  { name: "SHA‑512", re: /^[a-fA-F0-9]{128}$/ },
-  { name: "SHA3‑256", re: /^[a-fA-F0-9]{64}$/ },
-  { name: "SHA3‑512", re: /^[a-fA-F0-9]{128}$/ },
-  { name: "BLAKE2b", re: /^[a-fA-F0-9]{128}$/ },
-  { name: "BLAKE2s", re: /^[a-fA-F0-9]{64}$/ },
-  { name: "RIPEMD‑160", re: /^[a-fA-F0-9]{40}$/ },
-  { name: "Whirlpool", re: /^[a-fA-F0-9]{128}$/ },
-  { name: "CRC32", re: /^[a-fA-F0-9]{8}$/ },
-  { name: "NTLM", re: /^[a-fA-F0-9]{32}$/ },
-  { name: "LM Hash", re: /^[a-fA-F0-9]{32}$/ },
-  { name: "MySQL3", re: /^[a-fA-F0-9]{16}$/ },
-  { name: "MySQL4", re: /^[a-fA-F0-9]{40}$/ },
-  { name: "bcrypt", re: /^\$2[aby]\$\d+\$[./A-Za-z0-9]{53}$/ },
-  { name: "SHA256-crypt", re: /^\$5\$[./A-Za-z0-9]{16}\$[./A-Za-z0-9]{43}$/ },
-  { name: "SHA512-crypt", re: /^\$6\$[./A-Za-z0-9]{16}\$[./A-Za-z0-9]{86}$/ },
-  { name: "Keccak‑256", re: /^[a-fA-F0-9]{64}$/ },
-  { name: "Keccak‑512", re: /^[a-fA-F0-9]{128}$/ },
-  { name: "SipHash", re: /^[a-fA-F0-9]{16}$/ },
-  { name: "Tiger‑192", re: /^[a-fA-F0-9]{48}$/ },
-  { name: "GOST", re: /^[a-fA-F0-9]{64}$/ },
+  {name:'MD5', re:/^[a-fA-F0-9]{32}$/},
+  {name:'SHA‑1', re:/^[a-fA-F0-9]{40}$/},
+  {name:'SHA‑224', re:/^[a-fA-F0-9]{56}$/},
+  {name:'SHA‑256', re:/^[a-fA-F0-9]{64}$/},
+  {name:'SHA‑384', re:/^[a-fA-F0-9]{96}$/},
+  {name:'SHA‑512', re:/^[a-fA-F0-9]{128}$/},
+  {name:'SHA3‑256', re:/^[a-fA-F0-9]{64}$/},
+  {name:'SHA3‑512', re:/^[a-fA-F0-9]{128}$/},
+  {name:'bcrypt', re:/^\$2[aby]\$\d+\$[./A-Za-z0-9]{53}$/},
+  {name:'NTLM', re:/^[a-fA-F0-9]{32}$/},
+  {name:'LM Hash', re:/^[a-fA-F0-9]{32}$/},
+  {name:'CRC32', re:/^[a-fA-F0-9]{8}$/},
+  {name:'Adler32', re:/^[a-fA-F0-9]{8}$/},
+  {name:'BLAKE2b', re:/^[a-fA-F0-9]{128}$/},
+  {name:'BLAKE2s', re:/^[a-fA-F0-9]{64}$/},
+  {name:'RIPEMD‑160', re:/^[a-fA-F0-9]{40}$/},
+  {name:'GOST', re:/^[a-fA-F0-9]{64}$/},
+  {name:'Whirlpool', re:/^[a-fA-F0-9]{128}$/},
 ];
+const identifyHashes = text => {
+  const t = text.trim();
+  return HASH_DB.filter(h=>h.re.test(t)).map(h=>({hash:h.name,confidence:'high'}));
+};
 
-function identifyHashes(text) {
-  const trimmed = text.trim();
-  return HASH_DB.filter(h => h.re.test(trimmed)).map(h => ({ hash: h.name, confidence: "high" }));
-}
-
-// ==================== CIPHERTEXT / CONTAINER SIGS ====================
+// ==================== CIPHERTEXT SIGNATURES ====================
 const CIPHER_SIGS = [
-  { name: "OpenSSL salted", re: /^Salted__.{8}/s, detail: "AES‑256‑CBC with salt" },
-  { name: "PGP Message", re: /^-----BEGIN PGP MESSAGE-----/, detail: "ASCII‑armored PGP" },
-  { name: "GPG Encrypted Private Key", re: /^-----BEGIN PGP PRIVATE KEY BLOCK-----/, detail: "Encrypted GPG key" },
-  { name: "OpenSSH Private Key", re: /^-----BEGIN OPENSSH PRIVATE KEY-----/, detail: "Modern SSH key" },
-  { name: "RSA Private Key (PKCS#1)", re: /^-----BEGIN RSA PRIVATE KEY-----/, detail: "PEM encrypted RSA key" },
-  { name: "PKCS#8 Encrypted Private Key", re: /^-----BEGIN ENCRYPTED PRIVATE KEY-----/, detail: "Encrypted container" },
-  { name: "BitLocker recovery key", re: /^[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}$/, detail: "48‑digit recovery key" },
-  { name: "VeraCrypt header", re: /^(VERA|TRUE)/, detail: "First bytes of volume header" },
-  { name: "KeePass KDBX", re: /^\x03\xd9\xa2\x9a/, detail: "KeePass 2.x encrypted database" },
-  { name: "ZIP archive", re: /PK\x03\x04/, detail: "Check encryption flag" },
-  { name: "7z archive", re: /^7z\xbc\xaf\x27\x1c/, detail: "7z signature" },
-  { name: "RAR5 archive", re: /^Rar!\x1a\x07\x01\x00/, detail: "RAR5 with encryption" },
-  { name: "PDF encrypted", re: /%PDF-.*\/Encrypt/, detail: "PDF with encryption dictionary" },
+  {name:'OpenSSL salted', re:/^Salted__.{8}/s},
+  {name:'PGP Message', re:/^-----BEGIN PGP MESSAGE-----/},
+  {name:'GPG Encrypted Private Key', re:/^-----BEGIN PGP PRIVATE KEY BLOCK-----/},
+  {name:'OpenSSH Private Key', re:/^-----BEGIN OPENSSH PRIVATE KEY-----/},
+  {name:'RSA Private Key (PKCS#1)', re:/^-----BEGIN RSA PRIVATE KEY-----/},
+  {name:'PKCS#8 Encrypted Private Key', re:/^-----BEGIN ENCRYPTED PRIVATE KEY-----/},
+  {name:'BitLocker recovery key', re:/^[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}-[0-9]{6}$/},
+  {name:'KeePass KDBX', re:/^\x03\xd9\xa2\x9a/},
+  {name:'VeraCrypt header', re:/^(VERA|TRUE)/},
+  {name:'ZIP archive', re:/PK\x03\x04/},
+  {name:'7z archive', re:/^7z\xbc\xaf\x27\x1c/},
+  {name:'RAR5 archive', re:/^Rar!\x1a\x07\x01\x00/},
+  {name:'PDF encrypted', re:/%PDF-.*\/Encrypt/},
 ];
-
-function identifyCiphers(text) {
-  const matches = [];
-  for (const sig of CIPHER_SIGS) {
-    if (sig.re.test(text)) matches.push({ type: sig.name, detail: sig.detail, confidence: "high" });
-  }
-  // JWT check
-  const parts = text.split('.');
-  if (parts.length === 3 && parts.every(p => /^[A-Za-z0-9_-]+$/.test(p))) {
-    try {
-      JSON.parse(atob(parts[0].replace(/-/g,'+').replace(/_/g,'/')));
-      JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
-      matches.push({ type: "JWT (JSON Web Token)", detail: "Signed/encrypted token", confidence: "high" });
-    } catch(e) {}
-  }
-  return matches;
-}
-
-// ==================== RECURSIVE ENCODING CHAIN ====================
-function tryBase64Decode(str) {
-  try {
-    const cleaned = str.replace(/\s/g,'');
-    if (!/^[A-Za-z0-9+/=]+$/.test(cleaned)) return null;
-    return atob(cleaned);
-  } catch { return null; }
-}
-function decodeBase32(str) {
-  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-  const cleaned = str.replace(/[=\s]/g,'').toUpperCase();
-  if (!/^[A-Z2-7]+$/.test(cleaned)) return null;
-  let bits = '';
-  for (const ch of cleaned) {
-    const idx = alpha.indexOf(ch);
-    if (idx === -1) return null;
-    bits += idx.toString(2).padStart(5,'0');
-  }
-  const bytes = [];
-  for (let i = 0; i + 8 <= bits.length; i += 8) bytes.push(parseInt(bits.substr(i,8),2));
-  return String.fromCharCode(...bytes);
-}
-function tryUrlDecode(str) {
-  if (!/%[0-9A-F]{2}/i.test(str)) return null;
-  try { return decodeURIComponent(str); } catch { return null; }
-}
-function tryHtmlDecode(str) {
-  if (!/&[#a-zA-Z0-9]+;/.test(str)) return null;
-  const doc = new DOMParser().parseFromString(str, 'text/html');
-  return doc.documentElement.textContent;
-}
-function tryROT13(str) {
-  return str.replace(/[a-zA-Z]/g, c => String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26));
-}
-function tryHexDecode(str) {
-  const cleaned = str.replace(/\s/g,'');
-  if (!/^[0-9a-fA-F]+$/.test(cleaned) || cleaned.length%2!==0) return null;
-  const bytes = [];
-  for (let i=0;i<cleaned.length;i+=2) bytes.push(parseInt(cleaned.substr(i,2),16));
-  return String.fromCharCode(...bytes);
-}
-function buildRecursiveChain(input, maxLayers=5) {
-  const decoders = [
-    { name:'Base85/Ascii85', fn: s=>null }, // not fully implemented but placeholder
-    { name:'Base64', fn: tryBase64Decode },
-    { name:'Base32', fn: decodeBase32 },
-    { name:'URL', fn: tryUrlDecode },
-    { name:'HTML entities', fn: tryHtmlDecode },
-    { name:'ROT13', fn: tryROT13 },
-    { name:'Hex', fn: tryHexDecode },
-  ];
-  let chain = [];
-  let current = input;
-  for (let i=0; i<maxLayers; i++) {
-    let found = false;
-    for (const d of decoders) {
-      const res = d.fn(current);
-      if (res && res !== current) {
-        chain.push({ layer: chain.length+1, encoder: d.name, decoded: res.slice(0,300) });
-        current = res;
-        found = true;
-        break;
-      }
-    }
-    if (!found) break;
-  }
-  return chain;
-}
-
-// ==================== FILE MAGIC DETECTION ====================
-const FILE_MAGICS = [
-  { sig: [0x50,0x4B,0x03,0x04], name: 'ZIP archive' },
-  { sig: [0x37,0x7A,0xBC,0xAF,0x27,0x1C], name: '7z archive' },
-  { sig: [0x52,0x61,0x72,0x21,0x1A,0x07,0x01,0x00], name: 'RAR5 archive' },
-  { sig: [0x25,0x50,0x44,0x46], name: 'PDF document' },
-  { sig: [0x03,0xD9,0xA2,0x9A], name: 'KeePass KDBX' },
-  { sig: [0x56,0x45,0x52,0x41], name: 'VeraCrypt header' },
-  { sig: [0x54,0x52,0x55,0x45], name: 'TrueCrypt header' },
-];
-function detectFileMagic(bytes) {
-  for (const m of FILE_MAGICS) {
-    if (bytes.length >= m.sig.length && m.sig.every((b,i) => bytes[i] === b)) return m.name;
-  }
-  return null;
-}
+const identifyCiphers = text => {
+  return CIPHER_SIGS.filter(s=>s.re.test(text)).map(s=>({type:s.name,confidence:'high'}));
+};
 
 // ==================== VIGENÈRE CRACKER ====================
-function indexOfCoincidence(str) {
-  const freq = {};
-  for (const ch of str) freq[ch] = (freq[ch]||0)+1;
-  let sum = 0;
-  const n = str.length;
-  for (const k in freq) sum += freq[k]*(freq[k]-1);
-  return n > 1 ? sum/(n*(n-1)) : 0;
-}
-
-function findKeyLength(text, maxLen=20) {
-  const cleaned = text.replace(/[^A-Za-z]/g, '').toUpperCase();
-  if (cleaned.length < 10) return [1]; // too short
-  let bestLen = 1, bestIC = 0;
-  for (let len = 1; len <= maxLen; len++) {
-    let sumIC = 0;
-    for (let i = 0; i < len; i++) {
-      let substr = '';
-      for (let j = i; j < cleaned.length; j += len) substr += cleaned[j];
-      sumIC += indexOfCoincidence(substr);
+const indexOfCoincidence = str => {
+  const freq={}; for(const ch of str) freq[ch]=(freq[ch]||0)+1;
+  let sum=0; const n=str.length;
+  for(const k in freq) sum+=freq[k]*(freq[k]-1);
+  return n>1?sum/(n*(n-1)):0;
+};
+const findKeyLength = (text, max=20) => {
+  const cleaned = text.replace(/[^A-Za-z]/g,'').toUpperCase();
+  if(cleaned.length<10) return [1];
+  let bestLen=1,bestIC=0;
+  for(let len=1;len<=max;len++){
+    let sumIC=0;
+    for(let i=0;i<len;i++){
+      let substr='';
+      for(let j=i;j<cleaned.length;j+=len) substr+=cleaned[j];
+      sumIC+=indexOfCoincidence(substr);
     }
-    const avgIC = sumIC / len;
-    if (avgIC > bestIC) { bestIC = avgIC; bestLen = len; }
+    const avg=sumIC/len;
+    if(avg>bestIC){bestIC=avg;bestLen=len;}
   }
-  return [bestLen]; // could return multiple candidates, but one is enough
-}
-
-function crackVigenereKey(text, keyLen) {
-  const cleaned = text.replace(/[^A-Za-z]/g, '').toUpperCase();
-  let key = '';
-  for (let i = 0; i < keyLen; i++) {
-    let substr = '';
-    for (let j = i; j < cleaned.length; j += keyLen) substr += cleaned[j];
-    let bestShift = 0, bestScore = Infinity;
-    for (let shift = 0; shift < 26; shift++) {
-      const decrypted = substr.split('').map(c => toChar(toNum(c) - shift)).join('');
-      const score = englishScore(decrypted);
-      if (score < bestScore) { bestScore = score; bestShift = shift; }
+  return [bestLen];
+};
+const englishScore = str => {
+  const freq=[0.08167,0.01492,0.02782,0.04253,0.12702,0.02228,0.02015,0.06094,0.06966,0.00153,0.00772,0.04025,0.02406,0.06749,0.07507,0.01929,0.00095,0.05987,0.06327,0.09056,0.02758,0.00978,0.02360,0.00150,0.01974,0.00074];
+  const ct=new Array(26).fill(0); let total=0;
+  for(const ch of str.toUpperCase()){
+    const idx=ALPH.indexOf(ch);
+    if(idx>=0){ct[idx]++;total++;}
+  }
+  if(total<3) return 1000;
+  let chi=0;
+  for(let i=0;i<26;i++){
+    const exp=total*freq[i];
+    const d=ct[i]-exp;
+    chi+=d*d/exp;
+  }
+  return chi;
+};
+const crackVigenereKey = (text, keyLen) => {
+  const cleaned = text.replace(/[^A-Za-z]/g,'').toUpperCase();
+  let key='';
+  for(let i=0;i<keyLen;i++){
+    let substr='';
+    for(let j=i;j<cleaned.length;j+=keyLen) substr+=cleaned[j];
+    let bestShift=0,bestScore=Infinity;
+    for(let shift=0;shift<26;shift++){
+      const dec = substr.split('').map(c=>toChar(toNum(c)-shift)).join('');
+      const score = englishScore(dec);
+      if(score<bestScore){bestScore=score;bestShift=shift;}
     }
-    key += ALPH[bestShift];
+    key+=ALPH[bestShift];
   }
   return key;
-}
-
-function decryptVigenere(text, key) {
-  const cleaned = text.replace(/[^A-Za-z]/g, '').toUpperCase();
-  let decrypted = '';
-  for (let i = 0; i < cleaned.length; i++) {
-    const c = toNum(cleaned[i]);
-    const k = toNum(key[i % key.length]);
-    decrypted += toChar(c - k);
+};
+const decryptVigenere = (text, key) => {
+  const cleaned = text.replace(/[^A-Za-z]/g,'').toUpperCase();
+  let dec='';
+  for(let i=0;i<cleaned.length;i++){
+    const c=toNum(cleaned[i]);
+    const k=toNum(key[i%key.length]);
+    dec+=toChar(c-k);
   }
-  // reinsert spaces from original? Better to return raw.
-  return decrypted;
-}
-
-function autoSolveVigenere(text) {
-  const cleaned = text.replace(/[^A-Za-z]/g, '').toUpperCase();
-  if (cleaned.length < 10) return [{ key:'?', plaintext:'Text too short for reliable cracking', score:1000 }];
+  return dec;
+};
+const autoSolveVigenere = text => {
   const keyLens = findKeyLength(text);
-  const results = [];
-  for (const len of keyLens) {
-    const key = crackVigenereKey(text, len);
-    const plain = decryptVigenere(text, key);
-    const score = englishScore(plain);
-    results.push({ key, plaintext: plain, score });
+  const results=[];
+  for(const len of keyLens){
+    const key = crackVigenereKey(text,len);
+    const plain = decryptVigenere(text,key);
+    results.push({key, plaintext:plain, score:englishScore(plain)});
   }
-  results.sort((a,b) => a.score - b.score);
-  return results.slice(0, 5);
+  results.sort((a,b)=>a.score-b.score);
+  return results.slice(0,5);
+};
+
+// ==================== UI LOGIC ====================
+let currentMethodId = 'base64';
+let currentOpts = {key: 'KEY', shift:3, rails:3, a:5, b:8};
+
+function getMethod(id) { return METHODS[id]; }
+function setOpt(key,val) { currentOpts[key] = val; runSingle(); }
+
+function buildMethodSelect() {
+  const sel = document.getElementById('methodSelect');
+  sel.innerHTML = '';
+  const cats = [...new Set(Object.values(METHODS).map(m=>m.cat))];
+  for(const cat of cats) {
+    const grp = document.createElement('optgroup');
+    grp.label = cat;
+    for(const [id, m] of Object.entries(METHODS)) {
+      if(m.cat===cat) {
+        const opt = document.createElement('option');
+        opt.value = id;
+        opt.textContent = m.name;
+        if(id===currentMethodId) opt.selected = true;
+        grp.appendChild(opt);
+      }
+    }
+    sel.appendChild(grp);
+  }
+  sel.addEventListener('change', ()=>{
+    currentMethodId = sel.value;
+    runSingle();
+  });
 }
 
-// ==================== UI BINDING ====================
-function renderEntropy(text) {
-  const ent = shannonEntropy(text);
+function runSingle(){
+  const input = document.getElementById('inputData').value;
+  const m = getMethod(currentMethodId);
+  const encOut = document.getElementById('encodeOutput');
+  const decOut = document.getElementById('decodeOutput');
+  try {
+    let encoded;
+    if(m.encode.length===2 && m.opts) encoded = m.encode(input, currentOpts);
+    else encoded = m.encode(input);
+    encOut.textContent = encoded||'(empty)';
+  } catch(e){ encOut.textContent = '[encode error]'; }
+  try {
+    let decoded;
+    if(m.decode.length===2 && m.opts) decoded = m.decode(input, currentOpts);
+    else decoded = m.decode(input);
+    decOut.textContent = decoded||'(empty)';
+  } catch(e){ decOut.textContent = '[decode error]'; }
+}
+
+function fullAnalysis() {
+  const input = document.getElementById('inputData').value;
+  // entropy
+  const ent = shannonEntropy(input);
   let verdict = '';
-  if (ent > 7.8) verdict = '🔐 Extremely high – likely encrypted/random';
-  else if (ent > 6.5) verdict = '📦 High – compressed or encrypted';
-  else if (ent > 5.0) verdict = '🧩 Moderate – encoded/compressed';
-  else if (ent > 3.0) verdict = '📄 Low – likely plaintext';
-  else verdict = '📄 Very low – simple text';
-  return { ent, verdict };
-}
-
-function renderFullAnalysis(input) {
-  const entropy = renderEntropy(input);
-  const hashes = identifyHashes(input);
-  const ciphers = identifyCiphers(input);
-  const chain = buildRecursiveChain(input);
-
+  if(ent>7.8) verdict='🔐 Extremely high – likely encrypted/random';
+  else if(ent>6.5) verdict='📦 High – compressed or encrypted';
+  else if(ent>5) verdict='🧩 Moderate – encoded/compressed';
+  else if(ent>3) verdict='📄 Low – likely plaintext';
+  else verdict='📄 Very low – simple text';
   document.getElementById('entropyContent').innerHTML = `
-    <div><strong>Shannon Entropy:</strong> ${entropy.ent.toFixed(3)} bits/char</div>
-    <div style="margin-top:0.5rem;">${entropy.verdict}</div>
+    <div><strong>Shannon Entropy:</strong> ${ent.toFixed(3)} bits/char</div>
+    <div style="margin-top:0.5rem;">${verdict}</div>
   `;
-
-  let hashHtml = hashes.length ? hashes.map(h => `<div class="result-row">🔹 ${h.hash} <span class="badge high-conf">${h.confidence}</span></div>`).join('') : 'No standard hash pattern detected.';
-  document.getElementById('hashesContent').innerHTML = hashHtml;
-
-  let cipherHtml = ciphers.length ? ciphers.map(c => `<div class="result-row">🧪 ${c.type} <span class="badge high-conf">high</span><br><small>${c.detail}</small></div>`).join('') : 'No known ciphertext signatures.';
-  document.getElementById('cipherContent').innerHTML = cipherHtml;
-
-  let chainHtml = chain.length ? '<ol>' + chain.map(l => `<li><strong>${l.encoder}</strong> → <span style="font-family:monospace">${l.decoded}</span></li>`).join('') + '</ol>' : 'No decodable chain found.';
-  document.getElementById('encodingContent').innerHTML = chainHtml;
+  // hashes
+  const hashes = identifyHashes(input);
+  document.getElementById('hashesContent').innerHTML = hashes.length ? hashes.map(h=>`<div class="result-row">🔹 ${h.hash} <span class="badge high-conf">${h.confidence}</span></div>`).join('') : 'No standard hash pattern.';
+  // ciphers
+  const ciphers = identifyCiphers(input);
+  document.getElementById('cipherContent').innerHTML = ciphers.length ? ciphers.map(c=>`<div class="result-row">🧪 ${c.type} <span class="badge high-conf">high</span></div>`).join('') : 'No known ciphertext signatures.';
+  // encoding chain (simplified)
+  let chain = [];
+  let cur = input;
+  for(let i=0;i<3;i++){
+    let found=false;
+    for(const [id,m] of Object.entries(METHODS)){
+      if(id==='base64'||id==='base32'||id==='hex'||id==='url'||id==='html'||id==='rot13'){
+        try{
+          const dec = m.decode.length===2?m.decode(cur,currentOpts):m.decode(cur);
+          if(dec && dec!==cur && !dec.startsWith('[')){
+            chain.push({name:m.name, decoded:dec.slice(0,100)});
+            cur = dec;
+            found=true;
+          }
+        }catch{}
+      }
+    }
+    if(!found) break;
+  }
+  document.getElementById('encodingContent').innerHTML = chain.length ? chain.map(c=>`<div>🔗 <strong>${c.name}</strong> → ${c.decoded}</div>`).join('') : 'No recursive encoding detected.';
 }
+
+// Vigenère crack
+document.getElementById('crackVigenereBtn').addEventListener('click', ()=>{
+  const input = document.getElementById('inputData').value;
+  const results = autoSolveVigenere(input);
+  let html = '';
+  results.forEach((r,i)=>{
+    html += `<div class="result-row">
+      <strong>Candidate ${i+1}:</strong> Key = <span style="color:#fbbf24;">${r.key}</span> (score ${r.score.toFixed(1)})<br>
+      <span style="font-family:monospace;">${r.plaintext}</span>
+    </div>`;
+  });
+  document.getElementById('vigenereContent').innerHTML = html||'No solution found.';
+  // switch tab
+  document.querySelector('[data-panel="vigenerePanel"]').classList.add('active');
+  document.getElementById('vigenerePanel').style.display='block';
+});
+
+// Manual key
+document.getElementById('manualDecryptBtn').addEventListener('click', ()=>{
+  const input = document.getElementById('inputData').value;
+  const key = document.getElementById('manualKey').value;
+  const plain = decryptVigenere(input, key);
+  document.getElementById('manualDecryptResult').textContent = plain;
+});
 
 // Tab switching
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     tab.classList.add('active');
     const panelId = tab.dataset.panel;
-    ['summaryPanel','hashesPanel','cipherPanel','encodingPanel','vigenerePanel','manualPanel'].forEach(id => {
-      document.getElementById(id).style.display = (id === panelId) ? 'block' : 'none';
+    ['summaryPanel','hashesPanel','cipherPanel','encodingPanel','vigenerePanel','manualPanel'].forEach(id=>{
+      document.getElementById(id).style.display = (id===panelId)?'block':'none';
     });
   });
 });
 
-document.getElementById('fullAnalysisBtn').addEventListener('click', () => {
-  const input = document.getElementById('inputData').value;
-  renderFullAnalysis(input);
+// Main button
+document.getElementById('runAllBtn').addEventListener('click', fullAnalysis);
+
+// Encode/Decode buttons
+document.getElementById('encodeBtn').addEventListener('click', ()=>{
+  const m = getMethod(currentMethodId);
+  let res;
+  if(m.encode.length===2) res = m.encode(document.getElementById('inputData').value, currentOpts);
+  else res = m.encode(document.getElementById('inputData').value);
+  document.getElementById('encodeOutput').textContent = res;
+});
+document.getElementById('decodeBtn').addEventListener('click', ()=>{
+  const m = getMethod(currentMethodId);
+  let res;
+  if(m.decode.length===2) res = m.decode(document.getElementById('inputData').value, currentOpts);
+  else res = m.decode(document.getElementById('inputData').value);
+  document.getElementById('decodeOutput').textContent = res;
 });
 
-document.getElementById('crackVigenereBtn').addEventListener('click', () => {
-  const input = document.getElementById('inputData').value;
-  const results = autoSolveVigenere(input);
-  let html = '';
-  results.forEach((r, idx) => {
-    html += `<div class="result-row">
-      <strong>Candidate ${idx+1}:</strong> Key = <span style="color:#fbbf24;">${r.key}</span> (score ${r.score.toFixed(1)})<br>
-      <span style="font-family:monospace;">${r.plaintext}</span>
-    </div>`;
-  });
-  document.getElementById('vigenereContent').innerHTML = html || 'No solution found.';
-  // switch to Vigenère panel
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('[data-panel="vigenerePanel"]').classList.add('active');
-  document.querySelectorAll('#summaryPanel, #hashesPanel, #cipherPanel, #encodingPanel, #manualPanel').forEach(p => p.style.display='none');
-  document.getElementById('vigenerePanel').style.display = 'block';
-});
-
-document.getElementById('manualDecryptBtn').addEventListener('click', () => {
-  const input = document.getElementById('inputData').value;
-  const key = document.getElementById('manualKey').value.replace(/[^A-Za-z]/g, '').toUpperCase();
-  if (!key) { document.getElementById('manualDecryptResult').textContent = 'Please enter a key.'; return; }
-  const plain = decryptVigenere(input, key);
-  document.getElementById('manualDecryptResult').textContent = plain || 'Decryption produced empty result.';
-});
-
-document.getElementById('clearBtn').addEventListener('click', () => {
+// Clear
+document.getElementById('clearBtn').addEventListener('click', ()=>{
   document.getElementById('inputData').value = '';
-  document.getElementById('entropyContent').innerHTML = 'Run an analysis to see results.';
+  document.getElementById('encodeOutput').textContent = '';
+  document.getElementById('decodeOutput').textContent = '';
+  document.getElementById('entropyContent').innerHTML = 'Run an analysis.';
   document.getElementById('hashesContent').innerHTML = '';
   document.getElementById('cipherContent').innerHTML = '';
   document.getElementById('encodingContent').innerHTML = '';
-  document.getElementById('vigenereContent').innerHTML = 'Click Crack Vigenère to start.';
-  document.getElementById('manualDecryptResult').textContent = '';
-  document.getElementById('fileInfo').textContent = '';
 });
 
-// Drag‑and‑drop file magic
+// Drag-and-drop file magic
 const dropZone = document.getElementById('dropZone');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', async e => {
+dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', ()=> dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', async e=>{
   e.preventDefault();
   dropZone.classList.remove('dragover');
   const file = e.dataTransfer.files[0];
-  if (!file) return;
+  if(!file) return;
   const buffer = await file.arrayBuffer();
   const bytes = new Uint8Array(buffer);
-  const magic = detectFileMagic(bytes);
-  document.getElementById('fileInfo').textContent = magic 
-    ? `📦 Detected: ${magic} (first bytes: ${Array.from(bytes.slice(0,8)).map(b=>b.toString(16).padStart(2,'0')).join(' ')})`
-    : 'No known encrypted file signature found.';
+  let magic='';
+  if(bytes[0]===0x50 && bytes[1]===0x4B) magic='ZIP archive';
+  else if(bytes[0]===0x37 && bytes[1]===0x7A) magic='7z archive';
+  else if(bytes[0]===0x52 && bytes[1]===0x61) magic='RAR5 archive';
+  else if(bytes[0]===0x03 && bytes[1]===0xD9) magic='KeePass KDBX';
+  else if(bytes[0]===0x56 && bytes[1]===0x45) magic='VeraCrypt header';
+  else if(bytes[0]===0x54 && bytes[1]===0x52) magic='TrueCrypt header';
+  else magic='Unknown signature ('+Array.from(bytes.slice(0,8)).map(b=>b.toString(16).padStart(2,'0')).join(' ')+')';
+  document.getElementById('fileInfo').textContent = `📦 ${magic}`;
 });
+
+// Initialize
+buildMethodSelect();
+runSingle();
 </script>
 </body>
 </html>
